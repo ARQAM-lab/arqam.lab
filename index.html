@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARQAM – Business Intelligence</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Tailwind Colors */
+        :root {
+            --color-dark-blue: #002E5D;
+            --color-black: #000000;
+        }
+        .bg-arqam-dark-blue { background-color: var(--color-dark-blue); }
+        .text-arqam-dark-blue { color: var(--color-dark-blue); }
+        .bg-arqam-black { background-color: var(--color-black); }
+        .text-arqam-black { color: var(--color-black); }
+        .border-arqam-dark-blue { border-color: var(--color-dark-blue); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Smooth scroll for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-dark-blue);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #001f3f;
+        }
+
+        /* Fixed height for chart containers to make them shorter */
+        .chart-container {
+            height: 280px; /* Adjust this value as needed for desired height */
+            position: relative; /* Needed for Chart.js responsiveness within a fixed height container */
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center text-center bg-arqam-black text-white p-4">
+        <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('https://placehold.co/1920x1080/002E5D/FFFFFF/png?text=ARQAM+Background');"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight">ARQAM – Business Intelligence That Thinks For You</h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">Dashboards. Recommendations. Automated Decisions.</p>
+            <a href="#dashboard-examples" class="inline-block bg-arqam-dark-blue text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-opacity-90 transition duration-300 transform hover:scale-105">
+                View Examples
+            </a>
+        </div>
+    </section>
+
+    <!-- What ARQAM Does Section -->
+    <section id="what-we-do" class="py-16 md:py-24 bg-white text-arqam-black p-4">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">What ARQAM Does</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Feature 1: Intelligent Sales Analysis -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-arqam-dark-blue mb-4">
+                        <svg class="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3">Intelligent Sales Analysis</h3>
+                    <p class="text-gray-700 leading-relaxed">Identifies patterns, predicts trends, and optimizes pricing strategies to maximize your revenue.</p>
+                </div>
+
+                <!-- Feature 2: Inventory Optimization -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-arqam-dark-blue mb-4">
+                        <svg class="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3">Inventory Optimization</h3>
+                    <p class="text-gray-700 leading-relaxed">Avoid overstocking and stockouts. Precise suggestions for replenishment and product rotation.</p>
+                </div>
+
+                <!-- Feature 3: Staff Performance Evaluation -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-arqam-dark-blue mb-4">
+                        <svg class="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2v-2a3 3 0 015.356-1.857m7.5 1.857H17m-11.5 0A3.001 3.001 0 0113 16a3.001 3.001 0 01-6.5-1.857M10 20H2v-2a3 3 0 015.356-1.857m7.5 1.857H17m-11.5 0A3.001 3.001 0 0113 16a3.001 3.001 0 01-6.5-1.857m7.5 1.857H17m-11.5 0A3.001 3.001 0 0113 16a3.001 3.001 0 01-6.5-1.857M10 20H2v-2a3 3 0 015.356-1.857"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3">Staff Performance Evaluation</h3>
+                    <p class="text-gray-700 leading-relaxed">Identify your top talents, optimize shifts, and foster a high-performing team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Dashboard Examples Section -->
+    <section id="dashboard-examples" class="py-16 md:py-24 bg-arqam-dark-blue text-white p-4">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">Interactive Dashboard Examples</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Dashboard 1: Sales by Product and Day of the Week -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-arqam-black">
+                    <h3 class="text-2xl font-semibold mb-4">Sales by Product and Day of the Week</h3>
+                    <div class="chart-container">
+                        <canvas id="salesByProductChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-700">
+                        <span class="font-bold text-arqam-dark-blue">Recommendation:</span> Product A shows a sales peak on Fridays. Consider specific promotions on that day.
+                    </p>
+                </div>
+
+                <!-- Dashboard 2: Products that Run Out by Hour -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-arqam-black">
+                    <h3 class="text-2xl font-semibold mb-4">Products that Run Out by Hour</h3>
+                    <div class="chart-container">
+                        <canvas id="stockoutByHourChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-700">
+                        <span class="font-bold text-arqam-dark-blue">Recommendation:</span> Product C frequently runs out between 2 PM and 4 PM. Increase available stock for that time slot.
+                    </p>
+                </div>
+
+                <!-- Dashboard 3: Employee Performance Ranking -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-arqam-black">
+                    <h3 class="text-2xl font-semibold mb-4">Employee Performance Ranking</h3>
+                    <div class="chart-container">
+                        <canvas id="employeePerformanceChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-700">
+                        <span class="font-bold text-arqam-dark-blue">Recommendation:</span> Maria and Juan exceed average sales. Consider incentives or having them share their best practices.
+                    </p>
+                </div>
+
+                <!-- Dashboard 4: Revenue and Available Stock Comparison -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-arqam-black">
+                    <h3 class="text-2xl font-semibold mb-4">Revenue and Available Stock Comparison</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueStockChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-700">
+                        <span class="font-bold text-arqam-dark-blue">Recommendation:</span> Product D has high stock but low turnover. Evaluate a liquidation strategy.
+                    </p>
+                </div>
+
+                <!-- Dashboard 5: Sales Prediction for the Next Week -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-arqam-black md:col-span-2">
+                    <h3 class="text-2xl font-semibold mb-4">Sales Prediction for the Next Week</h3>
+                    <div class="chart-container">
+                        <canvas id="salesPredictionChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-700">
+                        <span class="font-bold text-arqam-dark-blue">Recommendation:</span> A 15% increase in sales is expected next week. Prepare your inventory.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI-Generated Recommendations Section -->
+    <section id="ai-recommendations" class="py-16 md:py-24 bg-white text-arqam-black p-4">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">AI-Generated Recommendations</h2>
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md border-l-4 border-arqam-dark-blue">
+                    <p class="text-lg leading-relaxed">
+                        <span class="font-bold text-arqam-dark-blue">"We recommend increasing stock of Product A on Tuesdays,</span> due to a 45% increase in sales."
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md border-l-4 border-arqam-dark-blue">
+                    <p class="text-lg leading-relaxed">
+                        <span class="font-bold text-arqam-dark-blue">"Employee Carlos exceeds average sales by 28%</span> during weekends."
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md border-l-4 border-arqam-dark-blue">
+                    <p class="text-lg leading-relaxed">
+                        <span class="font-bold text-arqam-dark-blue">"Reduce purchases of Product C:</span> negative margin in the last 4 weeks."
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md border-l-4 border-arqam-dark-blue">
+                    <p class="text-lg leading-relaxed">
+                        <span class="font-bold text-arqam-dark-blue">"Promote Product B online,</span> its online performance is 1.5 times higher than in physical store."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARQAM Assistant (Chat Simulation) Section -->
+    <section id="arqam-assistant" class="py-16 md:py-24 bg-arqam-black text-white p-4">
+        <div class="container mx-auto max-w-xl">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">ARQAM Assistant</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6 text-arqam-black h-96 flex flex-col">
+                <div id="chat-display" class="flex-grow overflow-y-auto mb-4 p-2 border border-gray-200 rounded-lg bg-gray-50">
+                    <!-- Chat messages will appear here -->
+                    <div class="flex justify-end mb-2">
+                        <div class="bg-blue-100 text-blue-800 p-3 rounded-lg max-w-[80%]">What products should I promote this week?</div>
+                    </div>
+                    <div class="flex justify-start mb-2">
+                        <div class="bg-arqam-dark-blue text-white p-3 rounded-lg max-w-[80%]">Based on margin and turnover analysis, I recommend promoting Product X and Product Y.</div>
+                    </div>
+                    <div class="flex justify-end mb-2">
+                        <div class="bg-blue-100 text-blue-800 p-3 rounded-lg max-w-[80%]">Who is my best employee today?</div>
+                    </div>
+                    <div class="flex justify-start mb-2">
+                        <div class="bg-arqam-dark-blue text-white p-3 rounded-lg max-w-[80%]">According to sales so far, Laura has generated the most value.</div>
+                    </div>
+                    <div class="flex justify-end mb-2">
+                        <div class="bg-blue-100 text-blue-800 p-3 rounded-lg max-w-[80%]">What was the best sales day this month?</div>
+                    </div>
+                    <div class="flex justify-start mb-2">
+                        <div class="bg-arqam-dark-blue text-white p-3 rounded-lg max-w-[80%]">The day with the highest sales this month was the 15th, with a volume of 12,500 units.</div>
+                    </div>
+                </div>
+                <div class="flex">
+                    <input type="text" placeholder="Ask the ARQAM Assistant..." class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-arqam-dark-blue">
+                    <button class="bg-arqam-dark-blue text-white p-3 rounded-r-lg hover:bg-opacity-90 transition duration-300">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section id="call-to-action" class="py-16 md:py-24 bg-white text-arqam-black text-center p-4">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-tight">Let your data speak. We listen for you.</h2>
+            <a href="#" class="inline-block bg-arqam-dark-blue text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-opacity-90 transition duration-300 transform hover:scale-105">
+                Request a Demo
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-arqam-black text-white py-8 text-center text-sm">
+        <p>&copy; 2024 ARQAM. All rights reserved.</p>
+        <p class="mt-2 text-gray-400">By a Moroccan, for Moroccans.</p>
+    </footer>
+
+    <script>
+        // Custom colors for Chart.js
+        const chartColors = {
+            darkBlue: '#002E5D',
+            black: '#000000',
+            white: '#FFFFFF',
+            gray: '#6B7280',
+            lightGray: '#D1D5DB',
+            green: '#10B981', // For positive trends
+            red: '#EF4444' // For negative trends/alerts
+        };
+
+        // Function to create a Chart.js graph
+        function createChart(ctxId, type, labels, data, label, backgroundColor, borderColor) {
+            const ctx = document.getElementById(ctxId).getContext('2d');
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: backgroundColor,
+                        borderColor: borderColor,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Important for fixed height containers
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: chartColors.lightGray,
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                color: chartColors.gray,
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                color: chartColors.gray,
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Dashboard 1: Sales by Product and Day of the Week (Bar Chart)
+        createChart(
+            'salesByProductChart',
+            'bar',
+            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            [200, 220, 180, 250, 350, 300, 280],
+            'Sales (Units)',
+            chartColors.darkBlue,
+            chartColors.darkBlue
+        );
+
+        // Dashboard 2: Products that Run Out by Hour (Line Chart)
+        createChart(
+            'stockoutByHourChart',
+            'line',
+            ['8h', '10h', '12h', '14h', '16h', '18h', '20h'],
+            [5, 8, 12, 25, 30, 15, 10], // Example data: number of stockouts
+            'Products Stocked Out',
+            chartColors.red,
+            chartColors.red
+        );
+
+        // Dashboard 3: Employee Performance Ranking (Bar Chart)
+        createChart(
+            'employeePerformanceChart',
+            'bar',
+            ['Mohammed', 'Asmae', 'Hassan', 'Maria', 'Rachid'],
+            [5000, 4800, 3500, 3200, 2900], // Example data: sales value
+            'Sales Generated ($)',
+            chartColors.green,
+            chartColors.green
+        );
+
+        // Dashboard 4: Revenue and Available Stock Comparison (Mixed Chart - Bar for Revenue, Line for Stock)
+        const revenueStockCtx = document.getElementById('revenueStockChart').getContext('2d');
+        new Chart(revenueStockCtx, {
+            type: 'bar', // Base type is bar
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [
+                    {
+                        label: 'Revenue ($)',
+                        data: [12000, 15000, 10000, 18000, 13000],
+                        backgroundColor: chartColors.darkBlue,
+                        borderColor: chartColors.darkBlue,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Available Stock (Units)',
+                        data: [800, 750, 900, 600, 850],
+                        type: 'line', // This dataset will be a line
+                        borderColor: chartColors.gray,
+                        backgroundColor: 'rgba(107, 114, 128, 0.2)',
+                        fill: true,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Important for fixed height containers
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: chartColors.black
+                        }
+                    }
+                },
+                scales: {
+                    y: { // Y-axis for Revenue
+                        beginAtZero: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Revenue ($)',
+                            color: chartColors.gray
+                        },
+                        grid: {
+                            color: chartColors.lightGray,
+                            drawBorder: false,
+                        },
+                        ticks: {
+                            color: chartColors.gray,
+                        }
+                    },
+                    y1: { // Y-axis for Stock
+                        beginAtZero: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Stock (Units)',
+                            color: chartColors.gray
+                        },
+                        grid: {
+                            drawOnChartArea: false, // Only draw grid lines for the first Y-axis
+                        },
+                        ticks: {
+                            color: chartColors.gray,
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            color: chartColors.gray,
+                        }
+                    }
+                }
+            }
+        });
+
+
+        // Dashboard 5: Sales Prediction for the Next Week (Line Chart)
+        createChart(
+            'salesPredictionChart',
+            'line',
+            ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            [280, 300, 290, 330, 380, 350, 320], // Example data: predicted sales
+            'Predicted Sales (Units)',
+            chartColors.darkBlue,
+            chartColors.darkBlue
+        );
+
+    </script>
+</body>
+</html>
